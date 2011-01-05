@@ -1,0 +1,16 @@
+{% extends "newsroom/base.html" %}
+
+
+{% block navclass %}nav-files{% endblock %}
+
+
+{% block main %}
+<h2>Upload File</h2>
+{% if form.instance.pk %}
+<p>Upload a new version of {{ form.instance }}</p>
+{% endif %}
+<form action="" method="post" enctype="multipart/form-data">
+{{ form.as_p }}
+<p><input type="submit" class="button" value="{% if form.instance.pk %}Replace{% else %}Add{% endif %} file" /></p>
+</form>
+{% endblock %}

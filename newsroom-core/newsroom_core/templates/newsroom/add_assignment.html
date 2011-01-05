@@ -1,0 +1,45 @@
+{% extends "newsroom/base.html" %}
+
+
+{% block navclass %}{% if is_request %}nav-requests{% else %}nav-assignments{% endif %}{% endblock %}
+
+
+{% block extrahead %}
+<link type="text/css" href="{{ NEWSROOM_MEDIA_URL }}js/theme/ui.all.css" rel="Stylesheet" />
+<script type="text/javascript" src="{{ NEWSROOM_MEDIA_URL }}js/jquery-ui-personalized-1.6rc6.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	// Datepicker
+	$('#id_pub_date').datepicker({
+		dateFormat: 'yy-mm-dd',
+		gotoCurrent: true,
+		firstDay: 1
+	});
+});
+</script>
+{% endblock %}
+
+
+{% block main %}
+<h2>{% if edit %}Edit{% else %}Add{% endif %} {{ category }} Assignment</h2>
+
+<form action="" method="post">
+<fieldset>
+<legend>Basic Information</legend>
+{{ form.as_p }}
+</fieldset>
+{% if properties_form.fields %}
+<fieldset>
+<legend>Properties</legend>
+{{ properties_form.as_p }}
+</fieldset>
+{% endif %}
+{% if details_form.fields %}
+<fieldset>
+<legend>Details</legend>
+{{ details_form.as_p }}
+</fieldset>
+{% endif %}
+<p><input type="submit" class="button" value="{% if edit %}Save{% else %}Add{% endif %} Assignment" />{% if edit %} or <a href="{{ form.instance.get_absolute_url }}">cancel</a>{% endif %}</p>
+</form>
+{% endblock %}

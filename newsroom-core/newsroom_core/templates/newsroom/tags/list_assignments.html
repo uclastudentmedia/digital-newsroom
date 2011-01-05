@@ -1,0 +1,30 @@
+{% load newsroom_utils newsroom_profile fuzzytime %}
+{% if assignments %}
+<table class="assignments-list">
+{% for assignment in assignments %}
+<tr rel="{{ assignment.pk }}">
+<td class="status status-{{ assignment.status.slug }}"><strong>{{ assignment.status }}</strong></td>
+{% if not current_section %}
+<td class="section">{% if not assignments_profile and not compiled  %}<a href="{% querystring section=assignment.section.slug %}">{% endif %}{{ assignment.section }}{% if not assignments_profile and not compiled %}</a>{% endif %}</td>
+{% endif %}
+<td class="title">{% if not compiled %}<a href="{{ assignment.get_absolute_url }}">{% endif %}{{ assignment }}{% if not compiled %}</a>{% endif %}</td>
+{% if not assignments_profile and not compiled %}
+<td class="profile">{% profile assignment.responsible %}</td>
+{% endif %}
+{# TODO: assignment flags #}
+<td class="created">
+{% if compiled %}
+{% if assignment.pub_date %}
+Pub&nbsp;date:&nbsp;{{ assignment.pub_date|date:"N" }}&nbsp;{{ assignment.pub_date|date:"j" }},&nbsp;{{ assignment.pub_date|date:"Y" }}
+{% endif %}
+{% else %}
+(Assigned {{ assignment.created_at|fuzzytime }})
+{% endif %}
+</td>
+</tr>
+{% endfor %}
+{% if more %}
+<p class="more"><a href="{{ url }}{% if current_section %}?section={{ current_section.slug }}{% endif %}">More &raquo;</a></p>
+{% endif %}
+</table>
+{% endif %}

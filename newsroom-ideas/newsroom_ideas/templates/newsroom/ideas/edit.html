@@ -1,0 +1,19 @@
+{% extends "newsroom/ideas/detail.html" %}
+
+
+{% block extrahead %}
+{{ block.super }}
+{% include "newsroom/ideas/include/idea_form_css.html" %}
+{% endblock %}
+
+
+{% block main %}
+{% include "newsroom/ideas/include/idea_form.html" %}
+{% endblock %}
+
+
+{% block secondary %}
+<h2>Actions</h2>
+<p><a href="{% url newsroom-ideas %}">View other ideas</a></p>
+<p><a href="{% url newsroom-idea-delete idea.pk %}">Delete this idea</a></p>
+{% endblock %}

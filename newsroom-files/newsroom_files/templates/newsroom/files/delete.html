@@ -1,0 +1,13 @@
+{% extends "newsroom/base.html" %}
+
+
+{% block navclass %}nav-files{% endblock %}
+
+
+{% block main %}
+<h2>Delete file</h2>
+<form action="" method="post">
+<p><em>Are you sure you want to permanently delete this file?</em></p>
+<p><input type="submit" class="button" value="Yes, delete the file" /> <a href="{% url newsroom-files %}">No, get me out of here</a></p>
+</form>
+{% endblock %}

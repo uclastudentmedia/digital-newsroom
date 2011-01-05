@@ -1,0 +1,7 @@
+{% extends "admin/change_form.html" %}
+
+{% block after_related_objects %}
+{% if not add %}
+<p>Add a new <a href="{% url admin_newsroom_core_categorychoicefield_add %}?category={{ object_id }}">choice field</a>, <a href="{% url admin_newsroom_core_categorytextfield_add %}?category={{ object_id }}">short text field</a> or  <a href="{% url admin_newsroom_core_categorybigtextfield_add %}?category={{ object_id }}">multi-line text field</a> (make sure you have saved any changes first)</p>
+{% endif %}
+{% endblock %}

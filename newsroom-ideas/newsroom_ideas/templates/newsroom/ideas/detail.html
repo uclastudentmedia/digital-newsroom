@@ -1,0 +1,27 @@
+{% extends "newsroom/base.html" %}
+
+
+{% block navclass %}nav-ideas{% endblock %}
+
+
+{% block main %}
+<h2>Viewing idea</h2>
+<div class="comments">
+{% include "newsroom/ideas/include/idea_detail.html" %}
+</div>
+{% block comment_form %}
+<form action="" method="post" enctype="multipart/form-data">
+<h3 id="comment">Add a comment</h3>
+{{ form.as_p }}
+<p><input type="submit" class="button" value="Add comment" /></p>
+</form>
+{% endblock %}
+{% endblock %}
+
+
+{% block secondary %}
+<h2>Actions</h2>
+<p><a href="{% url newsroom-ideas %}">View other ideas</a></p>
+<p><a href="{% url newsroom-idea-edit idea.pk %}">Edit this idea</a></p>
+<p><a href="{% url newsroom-idea-delete idea.pk %}">Delete this idea</a></p>
+{% endblock %}

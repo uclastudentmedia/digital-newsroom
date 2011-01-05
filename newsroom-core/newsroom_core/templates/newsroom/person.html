@@ -1,0 +1,37 @@
+{% extends "newsroom/base.html" %}
+{% load newsroom_assignments %}
+
+
+{% block navclass %}nav-people{% endblock %}
+
+
+{% block main %}
+<h2>About {{ profile }}</h2>
+<div class="person">{% include "newsroom/include/person.html" %}</div>
+<h3 class="section">Current assignments</h3>
+{% if assignments %}
+{% list_assignments assignments %}
+{% if assignments_count %}
+<p><a href="{% url newsroom-assignments-profile profile.user.username %}">See all {{ assignments_count }} assignment{{ assignments_count|pluralize }} {{ profile.user.first_name }} is involved in.</a></p>
+{% endif %}
+{% else %}
+<p><em>{{ profile.user.first_name }} has no active assignments/requests yet.</em></p>
+{% endif %}
+
+{% if requests %}
+<h3>Current requests</h3>
+{% list_assignments requests %}
+{% endif %}
+{% endblock %}
+
+
+{% block secondary %}
+<h2>Action</h2>
+<p>See</p>
+<ul>
+<li><a href="{% url newsroom-people-section profile.section.slug %}">People in {{ profile.section|lower }}</a></li>
+<li><a href="{% url newsroom-people %}">All other people</a></li>
+</ul>
+<p><a href="{% url newsroom-edit-profile profile.user.username %}">Edit profile</a></p>
+{% endblock %}
+

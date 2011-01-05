@@ -1,0 +1,41 @@
+{% extends "newsroom/base.html" %}
+{% load newsroom_profile %}
+
+
+{% block navclass %}nav-ideas{% endblock %}
+
+
+{% block extrahead %}
+{{ block.super }}
+{% include "newsroom/ideas/include/idea_form_css.html" %}
+{% endblock %}
+
+
+{% block main %}
+{% include "newsroom/ideas/include/idea_form.html" %}
+
+<h2>Ideas{% if current_section %} for {{ current_section }}{% endif %}</h2>
+<div class="comments">
+{% if idea_list %}
+{% for idea in idea_list %}
+{% include "newsroom/ideas/include/idea_list.html" %}
+{% endfor %}
+{% else %}
+<p><em>No ideas {% if current_section %}in this section {% endif %}yet, why don't you add the first?</em></p>
+{% endif %}
+</div>
+{% endblock %}
+
+
+{% block secondary %}
+<h2>View</h2>
+<p><a href="{% url newsroom-ideas %}">{% if not current_section %}<strong>{% endif %}All ideas ({{ ideas_count }}){% if not current_section %}</strong>{% endif %}</a></p>
+{% if sections %}
+<ul>
+{% for section in sections %}
+<li>{% ifequal section current_section %}<strong>{% endifequal %}<a href="?section={{ section.slug }}">{{ section }} ({{ section.idea__count }})</a>{% ifequal section current_section %}</strong>{% endifequal %}</li>
+{% endfor %}
+</ul>
+{% endif %}
+</ul>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% load thumbnail %}
+<img class="person-image" src="{% thumbnail profile.photo 80x80 crop %}" />
+<div class="person-title"><a href="{{ profile.get_absolute_url }}">{{ profile }}</a>
+{{ profile.title }}</div>
+{% if current_section or not profiles %}
+{% if profile.office_number %}<div><span class="short" title="Office phone number">O:</span> {{ profile.office_number }} {{ profile.office_number_ext }}</div>{% endif %}
+{% if profile.mobile_number %}<div><span class="short" title="Mobile number">M:</span> {{ profile.mobile_number }}</div>{% endif %}
+{% if profile.home_number %}<div><span class="short" title="Home phone number">H:</span> {{ profile.home_number }}</div>{% endif %}
+{% if profile.fax_number %}<div><span class="short" title="Fax number">F:</span> {{ profile.fax_number }}</div>{% endif %}
+{% if profile.additional_info %}<div><span>Additional:</span> {% if profiles %}{{ profile.additional_info|truncatewords:10|linebreaksbr }}{% else %}{{ profile.additional_info|linebreaksbr }}{% endif %}</div>{% endif %}
+{% endif %}

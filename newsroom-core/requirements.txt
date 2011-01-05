@@ -1,0 +1,1 @@
+-e svn+http://sorl-thumbnail.googlecode.com/svn/trunk#egg=sorl

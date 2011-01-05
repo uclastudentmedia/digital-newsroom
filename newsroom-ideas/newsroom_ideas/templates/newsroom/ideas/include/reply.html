@@ -1,0 +1,7 @@
+{% load newsroom_profile fuzzytime %}
+{% get_profile reply.created_by as profile %}
+<div class="reply{% if forloop.last %} last{% endif %}">
+<div class="user">{{ profile }} - </div>
+{{ reply.comment|linebreaks }}
+<div class="when">{{ reply.created_at|fuzzytime }}</div>
+</div>

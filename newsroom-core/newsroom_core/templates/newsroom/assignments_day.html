@@ -1,0 +1,39 @@
+{% extends "newsroom/assignments.html" %}
+{% load newsroom_profile newsroom_calendar newsroom_assignments newsroom_utils fuzzytime %}
+
+
+{% block content_start %}
+{% newsroom_calendar 30 %}
+{% endblock %}
+
+
+{% block main %}
+<div class="title-with-nav">
+<h2>{{ current_section }} Assignments for {{ day|date:"l, F j, Y" }}</h2>
+<div class="nav"><a href="{{ prev_day_url }}{% querystring %}">&laquo; Previous day</a> <a href="{{ next_day_url }}{% querystring %}">Next day &raquo;</a></div>
+</div>
+
+{% get_statuses as statuses for day from assignments %}
+{% include "newsroom/include/assignments_statuses.html" %}
+
+{% list_assignments sorted_assignments %}
+{% endblock %}
+
+
+{% block actions %}
+<p><a href="{% url_assignments_compiled day %}{% if current_section %}?section={{ current_section.slug }}{% endif %}">Compile for printing</a></p>
+{% endblock %}
+
+
+{% block my_assignments_link %}
+{{ block.super }}
+<p><a href="{% url newsroom-assignments %}{% if current_section %}?section={{ current_section.slug }}{% endif %}">All {{ current_section|lower }} assignments</a></p>
+{% endblock %}
+
+
+{% block all_assignments_title %}{{ day|date:"M j, Y" }} assignments{% endblock %}
+
+
+{% block secondary_end %}
+{% include "newsroom/include/sort.html" %}
+{% endblock %}

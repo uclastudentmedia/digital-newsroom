@@ -1,0 +1,20 @@
+{% extends "newsroom/ideas/detail.html" %}
+
+
+{% block main %}
+<form class="box" action="" method="post">
+<h3>Delete idea</h3>
+<p><em>Are you sure you want to permanently delete the idea listed below{% if idea.comment_set.count %}, including all comments and files{% endif %}?</em></p>
+<p><input type="submit" class="button" value="Yes, delete the idea" /> <a href="{% url newsroom-idea idea.pk %}">No, get me out of here</a></p>
+</form>
+{{ block.super }}
+{% endblock %}
+
+
+{% block comment_form %}{% endblock %}
+
+
+{% block secondary %}
+<h2>Actions</h2>
+<p><a href="{% url newsroom-ideas %}">View other ideas</a></p>
+{% endblock %}

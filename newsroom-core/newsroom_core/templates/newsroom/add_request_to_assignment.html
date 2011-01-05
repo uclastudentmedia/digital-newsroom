@@ -1,0 +1,39 @@
+{% extends "newsroom/base.html" %}
+{% load fuzzytime newsroom_profile %}
+
+
+{% block navclass %}nav-requests{% endblock %}
+
+
+{% block main %}
+<h2>Add {{ category }} Request</h2>
+
+<div class="box">
+<dl>
+<dt>Related to:</dt>
+<dd><strong>{{ parent.title }}</strong> ({{ parent.category }})</dd>
+<dd>Filed under {{ parent.section }}</dd>
+<dd>Created {{ parent.created_at|fuzzytime }} by {% profile parent.created_by %}</dd>
+</dl>
+</div>
+
+<form action="" method="post">
+<fieldset>
+<legend>Basic Information</legend>
+{{ form.as_p }}
+</fieldset>
+{% if properties_form.fields %}
+<fieldset>
+<legend>Properties</legend>
+{{ properties_form.as_p }}
+</fieldset>
+{% endif %}
+{% if details_form.fields %}
+<fieldset>
+<legend>Details</legend>
+{{ details_form.as_p }}
+</fieldset>
+{% endif %}
+<p><input type="submit" class="button" value="Add Request" /></p>
+</form>
+{% endblock %}

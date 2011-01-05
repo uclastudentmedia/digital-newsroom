@@ -1,0 +1,64 @@
+{% extends "newsroom/base.html" %}
+{% load newsroom_assignments %}
+
+
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" media="print" href="{{ NEWSROOM_MEDIA_URL }}css/print.css"></link>
+{% endblock %}
+
+
+{% block main %}
+<h2>Compiled {{ current_section }} Assignments &ndash; {{ day|date:"l, F j, Y" }}</h2>
+{% for assignment in assignments %}
+<div class="compile">
+	<div class="heading">
+		{% if assignment.slug %}<div class="item"><strong>Slug:</strong> {{ assignment }}</div>{% endif %}
+		{% if assignment.parent %}<div class="item"><strong>Parent:</strong> {{ assignment.parent }}</div>{% endif %}
+		{% if assignment.event_date %}<div class="right"><strong>Event Date:</strong> {{ assignment.event_date|date:"l, F j, Y" }}</div>{% endif %}
+		{% if not current_section %}<div class="item" style="clear:left;"><strong>Section:</strong> {{ assignment.section }}</div>{% endif %}
+		<div class="status status-{{ assignment.status.slug }}"{% if current_section %} style="clear:left"{% endif %}><strong style="float:left; margin-right:3em;">{{ assignment.status }}</strong></div>
+	</div>
+	<div class="properties">
+		<div class="item"><strong>Editor:</strong> {{ assignment.responsible.newsroomprofile }}</div>
+{% if assignment.involved.all %}
+		<div class="item"><strong>Assigned to:</strong> {% for user in assignment.involved.all %}{{ user.newsroomprofile }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+{% endif %}
+{% with assignment.properties as properties %}
+{% if properties %}
+{% for heading, value in properties %}
+		<div class="item"{% if forloop.first %} style="clear:left"{% endif %}><strong>{{ heading.name }}:</strong> {{ value|linebreaksbr }}</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+	</div>
+{% with assignment.details as details %}
+{% if details %}
+	<div class="details">
+{% for heading, detail in details %}
+		<div class="item"><strong>{{ heading.name }}:</strong><br />{{ detail|linebreaks }}</div>
+{% endfor %}
+	</div>
+{% endif %}
+{% endwith %}
+
+{% if assignment.related_assignments or assignment.related_requests %}
+	<div class="related">
+{% if assignment.related_assignments %}
+<strong>Related Assignments:</strong>
+{% list_assignments assignment.related_assignments %}
+{% endif %}
+{% if assignment.related_requests %}
+<strong>Related Requests:</strong>
+{% list_assignments assignment.related_requests %}
+{% endif %}
+	</div>
+{% endif %}
+
+</div>
+{% endfor %}
+
+{% endblock %}
+
+
+{% block secondary %}
+{% endblock %}

@@ -1,0 +1,6 @@
+{% block greeting %}Hello{% if user and user.first_name %} {{ first_name }}{% endif %}{% endblock %}
+
+{% block content %}{% endblock %}
+--
+{% block signature %}http://{{ site }}/
+The Digital Newsroom{% endblock %}

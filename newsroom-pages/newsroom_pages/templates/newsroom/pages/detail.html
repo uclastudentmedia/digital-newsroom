@@ -1,0 +1,24 @@
+{% extends "newsroom/pages/base.html" %}
+{% load newsroom_profile %}
+
+
+{% block main %}
+<h2>{{ page }}</h2>
+<div class="page-content">
+<h3>Summary</h3>
+{{ page.summary|urlize|linebreaks }}
+<h3>Content</h3>
+{{ page.content|urlize|linebreaks }}
+</div>
+{% endblock %}
+
+
+{% block secondary %}
+<h2>Actions</h2>
+{% include "newsroom/pages/include/action_view_others.html" %}
+{% include "newsroom/pages/include/action_delete.html" %}
+{% get_profile user as profile %}
+{% if profile.is_editor %}
+<p><a href="{% url newsroom-page-edit page.slug %}">Edit this page</a></p>
+{% endif %}
+{% endblock %}

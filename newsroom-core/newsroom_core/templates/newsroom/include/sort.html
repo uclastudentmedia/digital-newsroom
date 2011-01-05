@@ -1,0 +1,27 @@
+{% load newsroom_utils %}
+{% if sort_options %}
+<h2>Sort</h2>
+<form action="" method="get">
+{% if sort1 or sort2 %}
+<p><a href="{% querystring sort1 sort1_reverse sort2 sort2_reverse default_sort=1 %}">Use default sort order</a></p>
+{% endif %}
+{% form_querystring sort1 sort1_reverse sort2 sort2_reverse default_sort %}
+<p><select name="sort1">
+<option value="">------</option>
+{% for k, v in sort_options %}
+<option value="{{ k }}"{% ifequal k sort1 %} selected="selected"{% endifequal %}>{{ v }}</option>
+{% endfor %}
+</select>
+<br /><input type="checkbox" class="checkbox" id="sort1_reverse" name="sort1_reverse"{% if sort1_reverse %} checked="checked"{% endif %} /> <label for="sort1_reverse" class="checkbox">reversed</label>
+</p>
+<p><select name="sort2">
+<option value="">------</option>
+{% for k, v in sort_options %}
+<option value="{{ k }}"{% ifequal k sort2 %} selected="selected"{% endifequal %}>{{ v }}</option>
+{% endfor %}
+</select>
+<br /><input type="checkbox" class="checkbox" id="sort2_reverse" name="sort2_reverse"{% if sort2_reverse %} checked="checked"{% endif %} /> <label for="sort2_reverse" class="checkbox">reversed</label>
+</p>
+<p><input type="submit" class="button" value="Sort" /></p>
+</form>
+{% endif %}

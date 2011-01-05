@@ -1,0 +1,23 @@
+{% extends "newsroom/registration/base.html" %}
+{% load i18n %}
+
+
+{% block content %}
+<h1>Log In</h1>
+{% if error_message %}
+<p class="errornote">{{ error_message }}</p>
+{% endif %}
+<form action="{{ app_path }}" method="post" id="login-form">
+  <input type="hidden" name="this_is_the_login_form" value="1" />
+  <p><label for="id_username">{% trans 'Username:' %}</label> <input type="text" name="username" id="id_username" /></p>
+  <p><label for="id_password">{% trans 'Password:' %}</label> <input type="password" name="password" id="id_password" /></p>
+  <p><input type="checkbox" value="1" name="remember_me" id="remember_me" class="checkbox" /> <label class="checkbox" for="remember_me">Remember me on this computer</label></p>
+  <p><input type="submit" value="{% trans 'Log in' %}" /></p>
+  <p><a href="{% url django.contrib.auth.views.password_reset %}">Forgot password?</a></p>
+</form>
+
+<script type="text/javascript">
+document.getElementById('id_username').focus()
+</script>
+</div>
+{% endblock %}

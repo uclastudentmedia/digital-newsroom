@@ -1,0 +1,13 @@
+{% extends "newsroom/emails/base.txt" %}
+{% load newsroom_profile %}
+SUBJECT: Comment on {{ comment.assignment }}
+
+
+{% block content %}{% get_profile comment.created_by as creator %}{{ creator }} said:
+------------------------
+{{ comment.comment }}
+------------------------
+
+To comment or update this {% if comment.assignment.confirmed %}assignment{% else %}request{% endif %}, follow the link below:
+http://{{ site }}{{ assignment.get_absolute_url }}
+{% endblock %}

@@ -1,0 +1,627 @@
+/* basic template */
+
+body {
+	font-family:verdana, arial, sans-serif;
+	font-size:.8em;
+	margin:0;
+	padding:1em 1em 2em;
+}
+
+.wrapper {
+	width:1000px;
+	margin:0 auto;
+	background:#eee;
+	color:#000;
+	padding:10px;
+	border:1px solid #ccc;
+}
+
+#nav, #content {
+	overflow:hidden;
+	zoom:1; /* IE float expansion */
+	background:#fff;
+	border:1px solid #ccc;
+	padding:1em;
+}
+
+#nav {
+	margin-bottom:10px;
+	padding-bottom:0;
+}
+
+p {
+	padding:0;
+	margin:0 0 1em;
+}
+
+a {
+	text-decoration:none;
+	color:#06c;
+}
+a:hover {
+	text-decoration:underline;
+}
+
+
+/* nav layout */
+
+#nav h1 {
+	float:left;
+	padding:0;
+	margin:0;
+}
+
+#nav form.user {
+	float:right;
+}
+
+#nav ul {
+	list-style:none;
+	float:left;
+	clear:left;
+	margin:1em 0 0;
+	padding:0;
+}
+
+#nav ul li {
+	float:left;
+	border:1px solid #999;
+	border-bottom:none;
+	margin-right:1em;
+}
+
+#nav ul a {
+	display:block;
+	padding:.25em 1em;
+	color:#333;
+	text-decoration:none;
+}
+
+#nav ul.right {
+	float:right;
+	clear:none;
+}
+
+#nav.nav-assignments .nav-assignments,
+#nav.nav-requests .nav-requests,
+#nav.nav-ideas .nav-ideas,
+#nav.nav-files .nav-files,
+#nav.nav-pages .nav-pages,
+#nav.nav-people .nav-people {
+	background:#999;
+}
+
+#nav.nav-assignments .nav-assignments a,
+#nav.nav-requests .nav-requests a,
+#nav.nav-ideas .nav-ideas a,
+#nav.nav-files .nav-files a,
+#nav.nav-pages .nav-pages a,
+#nav.nav-people .nav-people a {
+	color:#fff;
+}
+
+
+/* content layout */
+
+#main {
+	float:left;
+	display:inline;
+	width:700px;
+	border-right:1px solid #eee;
+	margin-right:15px;
+	padding:10px;
+}
+
+#main h2 {
+	font-size:1.5em;
+	margin:0;
+	padding:0 0 1em;
+}
+
+h3 {
+	margin:1em 0 .25em;
+	padding:0;
+}
+
+h4 {
+	margin:1.5em 0 0.25em;
+	padding:0;
+}
+
+#main .title-with-nav h2 {
+	padding:0;
+}
+
+#main .title-with-nav {
+	padding-bottom:1.5em;
+}
+
+#main .title-with-nav .nav a {
+	padding-right:1em;
+}
+
+#secondary {
+	margin-left:740px;
+}
+
+
+/* basic form styling */
+
+label {
+	float:left;
+	clear:left;
+	width:9.5em;
+	text-align:right;
+	padding:.25em .5em 0 0;
+}
+
+label.checkbox {
+	float:none;
+	width:auto;
+	padding:0;
+	text-align:left;
+}
+
+.button {
+	clear:left;
+}
+
+form ul {
+	margin:0 0 1em 10em;
+	padding:0;
+	list-style:none;
+}
+
+form p {
+	overflow:hidden;
+	zoom:1; /* IE float expansion */
+}
+
+ul label {
+	float:none;
+	padding:0;
+}
+
+.help_text {
+	padding-left:1em;
+	color:#666;
+}
+
+fieldset {
+	border:none;
+	border-top:1px solid #aaa;
+}
+
+legend {
+	font-weight:bold;
+	padding:0 .5em;
+	margin:0;
+	font-size:1.2em;
+}
+
+.errorlist {
+	list-style:none;
+	margin:.5em 0 0 10em;
+	padding:0;
+}
+
+.errorlist li {
+	font-size:.8em;
+	color:#930;
+	font-weight:bold;
+}
+
+
+/* basic layout elements */
+
+.box {
+	border:1px solid #ccc;
+	background:#f9f9f9;
+	padding:1.5em 1.5em .5em;
+	margin-bottom:1em;
+	overflow:hidden;
+	zoom:1; /* IE float expansion */
+}
+
+.box h3 {
+	padding:0;
+	margin:0 0 1em;
+}
+
+.box dl {
+	margin:0 0 1em;
+}
+.box dt {
+	float:left;
+	width:6.5em;
+}
+.box dd {
+	margin-left:7em;
+}
+
+h3.section {
+	margin-top:1em;
+	padding-top:1.5em;
+	border-top:1px solid #ccc;
+}
+
+.box .people {
+	overflow:hidden;
+	zoom:1; /* IE float expansion */
+}
+.box .half {
+	width:47.5%;
+	padding-right:2%;
+	float:left;
+}
+.box .property {
+	width:22.75%;
+	padding-right:2%;
+	float:left;
+}
+
+.box table {
+	clear:left;
+	width:99.5%;
+
+}
+.box td {
+	vertical-align:top;
+	padding:0 .5em .5em 0;
+}
+
+
+/* secondary area general layout */
+
+#secondary p {
+	margin:1em 0 .5em;
+}
+
+#secondary ul {
+	list-style:none;
+	margin:0 0 0 1.5em;
+	padding:0;
+}
+#secondary li {
+	margin:0 0 .5em;
+}
+
+#secondary strong a, #secondary a strong {
+	font-size:1.2em;
+}
+
+#secondary .item {
+	border-bottom:1px solid #eee;
+	padding-bottom:.5em;
+}
+#secondary .last {
+	border-bottom:none;
+}
+
+#secondary small {
+	font-size:.8em;
+}
+
+
+/* compile view */
+
+.compile .heading {
+	background:#eee;
+	height:auto !important;
+	height:1.5em;
+	min-height:1.5em;
+	padding:.5em 1em;
+	border-top:1px solid #999;
+	font-size:1.1em;
+	overflow:hidden;
+	zoom:1; /* IE float expansion */
+}
+.compile .heading .item {
+	float:left;
+	margin-right:3em;
+	margin-bottom:.5em;
+}
+.compile .heading .right {
+	float:right;
+}
+
+.compile .properties, .compile .details {
+	overflow:hidden;
+	zoom:1; /* IE float expansion */
+	padding:1em;
+}
+
+.compile .details {
+	border-top:2px solid #eee;
+	border-bottom:2px solid #eee;
+	padding-bottom:0;
+	margin-bottom:1em;
+}
+
+.compile .properties .item {
+	float:left;
+	margin-right:3em;
+}
+.compile .details .item {
+	float:left;
+	width:49%;
+}
+
+.compile .related {
+	padding:0 1em 1em;
+}
+
+.compile .assignments-list .status strong {
+	font-size:10px;
+}
+.compile .assignments-list {
+	border-top:1px solid #eee;
+}
+.compile .assignments-list td {
+	border-bottom:1px solid #eee;
+}
+
+
+/* assignments calendar */
+
+.assignments-calendar {
+	list-style:none;
+	margin:0;
+	padding:0;
+	overflow:hidden;
+	zoom:1; /* IE float expansion */
+	height:2em;
+}
+.assignments-calendar li {
+	float:left;
+	padding:0 .5em 1em 0;
+}
+.assignments-calendar a {
+	display:block;
+	padding:0 .25em;
+	border:1px solid #ccc;
+	color:#999;
+	text-decoration:none;
+}
+
+.assignments-calendar .unfinished a {
+	color:#a43;
+	font-weight:bold;
+}
+.assignments-calendar .finished a {
+	color:#3a3;
+	font-weight:bold;
+}
+.assignments-calendar a:hover {
+	background-color:#ddf;
+	border-color:#000;
+}
+.assignments-calendar .selected a {
+	border:1px solid #666;
+	color:#333;
+	background:#eee;
+}
+
+.assignments-calendar .nav a {
+	float:left;
+}
+.assignments-calendar .nav a.nav {
+	border:none;
+	color:#333;
+	font-weight:bold;
+	border-top:1px solid #fff;
+	border-bottom:1px solid #fff;
+}
+.assignments-calendar .nav a.nav:hover {
+	background:#ccc;
+	border-top:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+}
+
+/* assignments list */
+
+table.assignments-statuses {
+	width:99%;
+	margin-bottom:1em;
+	border-spacing:0;
+}
+
+table.assignments-statuses tr.empty {
+	color:#666;
+}
+
+table.assignments-statuses td, table.assignments-statuses th {
+	border-bottom:1px solid #eee;
+	padding:.5em 1em .5em 0;
+}
+
+table.assignments-statuses tbody th {
+	text-align:left;
+}
+
+table.assignments-statuses thead th,
+table.assignments-statuses tbody td {
+	text-align:center;
+}
+
+table.assignments-list {
+	width:99%;
+	margin-bottom:1em;
+	border-spacing:0;
+	vertical-align:top;
+}
+
+table.assignments-list td {
+	padding-right:.5em;
+}
+
+table.assignments-list td.status {
+	width:0;
+}
+table.assignments-list td.section {
+	font-size:.8em;
+	width:6em;
+}
+table.assignments-list td.profile,
+table.assignments-list td.created {
+	width:12em;
+}
+
+
+/* statuses */
+
+.status strong {
+	font-size:12px;
+	display:block;
+	width:9em;
+	padding:0 .5em;
+	height:20px;
+	line-height:20px;
+	background:#999;
+	color:#fff;
+	text-align:center;
+}
+
+.status-pending strong {
+    background:red;
+}
+
+.status-assigned strong {
+    background:blue;
+}
+
+.status-edited strong {
+    background:green;
+}
+
+.status-completed strong {
+    background:gray;
+}
+
+
+/* person list */
+
+.people-list h3 {
+	font-size:1.4em;
+}
+
+.people-list ul {
+	padding:0;
+	margin:0;
+	overflow:hidden;
+	zoom:1; /* IE float expansion */
+}
+.people-list li.person {
+	margin:0 2% 1em 0;
+	float:left;
+	width:31%;
+}
+
+.person {
+	overflow:hidden;
+	zoom:1; /* IE float expansion */
+}
+
+div.person {
+	padding-bottom:1em;
+}
+
+.person div {
+	margin-left:55px;
+}
+
+.person img {
+	float:left;
+	border:1px solid #ccc;
+	padding:1px;
+	width:40px;
+	height:40px;
+	margin-top:1px;
+}
+
+.person .person-title {
+	font-size:1.2em;
+	padding-bottom:.5em;
+}
+.person .person-title a {
+	display:block;
+	margin-bottom:.25em;
+}
+
+.person span {
+	color:#666;
+}
+.person span.short {
+	float:left;
+	width:2em;
+}
+
+
+/* comments */
+
+.comment {
+	overflow:hidden;
+	zoom:1; /* IE float expansion */
+	border-bottom:1px solid #eee;
+	margin-bottom:1em;
+	padding-bottom:1em;
+}
+
+.comments .last {
+	border:none;
+	margin:0;
+	padding:0;
+}
+
+.comment .user {
+	float:left;
+	margin:.5em .5em 0 0;
+	font-weight:bold;
+}
+
+.comment p {
+	margin:.5em 0;
+}
+
+.comment .when {
+	font-style:italic;
+	color:#999;
+	margin:0 2em 1em 0;
+	float:left;
+}
+
+.comment .actions {
+	float:right;
+	font-weight:bold;
+}
+
+.comment .section {
+	color:#999;
+	font-weight:bold;
+	float:left;
+}
+
+.comment .section a {
+	font-weight:normal;
+	color:#666;
+}
+
+.comment .replies {
+	margin-left:3em;
+	clear:right;
+}
+
+.comment .reply {
+	padding-left:1em;
+	border-left:3px solid #eee;
+}
+
+.comment .reply .user {
+	margin:0 .5em 0 0;
+}
+.comment .reply p {
+	margin:0 0 .5em;
+}
+
+.comment .replies .last .when {
+	margin:0;

@@ -1,0 +1,179 @@
+{% extends "newsroom/base.html" %}
+{% load newsroom_profile newsroom_calendar newsroom_assignments newsroom_utils fuzzytime %}
+
+
+{% block navclass %}{% if not assignment.confirmed %}nav-requests{% else %}nav-assignments{% endif %}{% endblock %}
+
+
+{% block extrahead %}
+{% if accept_form %}
+<link type="text/css" href="{{ NEWSROOM_MEDIA_URL }}js/theme/ui.all.css" rel="Stylesheet" />
+<script type="text/javascript" src="{{ NEWSROOM_MEDIA_URL }}js/jquery-ui-personalized-1.6rc6.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	// Datepicker
+	$('#id_pub_date').datepicker({
+		dateFormat: 'yy-mm-dd',
+		gotoCurrent: true,
+		firstDay: 1
+	});
+});
+</script>
+{% else %}
+<script type="text/javascript" src="{{ NEWSROOM_MEDIA_URL }}js/jquery.scrollTo-min.js"></script>
+<script type="text/javascript" src="{{ NEWSROOM_MEDIA_URL }}js/jquery.localscroll-min.js"></script>
+<script type="text/javascript">
+$(function (){
+	$.localScroll({duration: 500})
+})
+</script>
+{% endif %}
+{% endblock %}
+
+
+{% block main %}
+<h2>{{ assignment.category }} - {{ assignment }}</h2>
+{% if assignment.parent %}
+<div class="box">
+<dl>
+<dt>Related to:</dt>
+<dd><a href="{{ assignment.parent.get_absolute_url }}">{{ assignment.parent }}</a></dd>
+</dl>
+</div>
+{% endif %}
+<div class="box">
+<div class="people">
+<div class="half">
+<p>Editor: {% profile assignment.responsible %}<br />
+{% if assignment.involved.all %}
+Assigned to: {% for user in assignment.involved.all %}{% profile user %}{% if not forloop.last %}, {% endif %}{% endfor %}
+{% endif %}
+</p>
+</div>
+<div class="half">
+<p>
+{% if assignment.pub_date %}
+Pub date: <a href="{% url_assignments_day assignment.pub_date %}">{{ assignment.pub_date|date:"l, F j, Y" }}</a><br />
+{% endif %}
+Created {{ assignment.created_at|fuzzytime }} by {% profile assignment.created_by %}
+{% if assignment.updated_by %}
+<br />Updated {{ assignment.updated_on|fuzzytime }} by {% profile assignment.updated_by %}
+{% endif %}
+</p>
+</div>
+</div>
+{% with assignment.properties as properties %}
+{% if properties %}
+{% for heading, value in properties %}
+<div class="property">
+<strong>{{ heading.name }}: </strong>{{ value|linebreaks }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+{% if assignment.confirmed %}
+<form action="{% url newsroom-assignment-change-status %}" method="post" class="change-status">
+<input type="hidden" value="{{ assignment.pk }}" name="assignment_id" />
+<table cellspacing="0" cellpadding="0">
+<tr><td><strong>Status:</strong></td><td>{{ assignment.status }}<br />{{ status_form.change_status }}</td><td>{{ status_form.comment }}</td><td><input type="submit" value="Update" /></td></tr>
+</table>
+</form>
+{% endif %}
+</div>
+
+{% with assignment.details as details %}
+{% with details|length as details_length %}
+{% if details %}
+<fieldset{% ifnotequal details_length 1 %} class="collapse"{% endifnotequal %}>
+<legend>{% ifequal details_length 1 %}{{ details.0.0.name }}{% else %}Details{% endifequal %}</legend>
+{% for heading, detail in details %}
+{% ifnotequal details_length 1 %}<h4>{{ heading.name }}</h4>{% endifnotequal %}
+{{ detail|linebreaks }}
+{% endfor %}
+</fieldset>
+{% endif %}
+{% endwith %}
+{% endwith %}
+
+{% with assignment.parent.details as details %}
+{% if details %}
+<fieldset class="collapse">
+<legend>Parent {{ assignment.parent.category }} Details</legend>
+{% for heading, detail in details %}
+<h4>{{ heading.name }}</h4>
+{{ detail|linebreaks }}
+{% endfor %}
+</fieldset>
+{% endif %}
+{% endwith %}
+
+{% if related_assignments or related_requests %}
+<h3 class="section">Related {% if related_assignments %}Assignments{% endif %}{% if related_requests and related_assignments %} &amp; {% endif %}{% if related_requests %}Requests{% endif %}</h3>
+{% if related_requests and related_assignments %}
+<h4>Assignments</h4>
+{% endif %}
+{% for assignment in related_assignments %}
+<p><a href="{{ assignment.get_absolute_url }}">{{ assignment.title }}</a> (created {{ assignment.created_at|fuzzytime }})</p>
+{% endfor %}
+{% if related_requests and related_assignments %}
+<h4>Requests</h4>
+{% endif %}
+{% for assignment in related_requests %}
+<p><a href="{{ assignment.get_absolute_url }}">{{ assignment.title }}</a> (created {{ assignment.created_at|fuzzytime }})</p>
+{% endfor %}
+{% endif %}
+
+{% with assignment.comments.all as comments %}
+{% if comments %}
+<div class="comments">
+<h3 class="section">Comments</h3>
+{% for comment in comments %}
+{% include "newsroom/include/comment.html" %}
+{% endfor %}
+</div>
+{% endif %}
+{% if comment_form %}
+<form action="" method="post" enctype="multipart/form-data">
+<h3 id="comment" class="section">{% if comments %}Leave a{% else %}Add the first{% endif %} comment</h3>
+{{ comment_form.as_p }}
+<p><input type="submit" class="button" value="Add comment" /></p>
+</form>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+
+{% block secondary %}
+<h2>Take Action</h2>
+<p><a href="{{ assignment.get_edit_url }}">Edit</a></p>
+<p><a href="#comment">Make a comment</a></p>
+{% if request_categories %}
+<p>Add request:</p>
+<ul>
+{% for category in request_categories %}
+<li><a href="{% url newsroom-assignment-add-request category_slug=category.slug,assignment_slug=assignment.slug %}">{{ category }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+{% if assignment.confirmed %}
+	{% with assignment.statushistory_set.all as history %}
+	{% if history %}
+	<h2>Status History</h2>
+	{% for change in history %}
+	<div class="item{% if forloop.last %} last{% endif %}">
+	<p>Changed to <strong>{{ change.status }}</strong></p>
+	<p><small>{{ change.date|fuzzytime }} by {% profile change.user %}</small></p>
+	{% if change.comment %}
+	{{ change.comment|urlize|linebreaks }}
+	{% endif %}
+	</div>
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
+{% else %}
+	{% get_profile user as profile %}
+	{% if profile.is_editor %}
+	<p><a href="{{ assignment.get_accept_url }}">Accept request, make assignment</a></p>
+	{% endif %}
+{% endif %}
+{% endblock %}

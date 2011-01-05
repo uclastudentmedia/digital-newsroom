@@ -1,0 +1,10 @@
+{% extends "newsroom/emails/base.txt" %}
+{% load newsroom_profile %}
+SUBJECT: Status changed to {{ assignment.status }} for {{ assignment }}
+
+
+{% block content %}{% get_profile assignment.updated_by as creator %}{{ creator }} changed the status to {{ assignment.status }}
+
+To comment or update this assignment, follow the link below:
+http://{{ site }}{{ assignment.get_absolute_url }}
+{% endblock %}

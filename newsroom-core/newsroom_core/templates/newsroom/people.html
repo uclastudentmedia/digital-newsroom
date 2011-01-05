@@ -1,0 +1,58 @@
+{% extends "newsroom/base.html" %}
+
+
+{% block navclass %}nav-people{% endblock %}
+
+
+{% block main %}
+<h2>People{% if current_section %} in {{ current_section }}{% endif %}</h2>
+{% if total %}
+{% for section in sections %}
+{% with section.profile_set.all as profiles %}
+{% if profiles %}
+<div class="people-list">
+{% if not current_section %}
+<h3><a href="{% url newsroom-people-section section.slug %}">{{ section }}</a></h3>
+{% endif %}
+<ul>
+{% for profile in profiles %}
+<li class="person">
+{% include "newsroom/include/person.html" %}
+</li>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+{% endwith %}
+{% endfor %}
+{% if other_profiles %}
+<div class="people-list">
+<h3>No section</h3>
+{% for profile in other_profiles %}
+<li><a href="{{ profile.get_absolute_url }}">{{ profile }}</a></li>
+{% endfor %}
+</div>
+{% endif %}
+{% else %}
+{% if current_section %}
+<p><em>No people in {{ current_section|lower }}. <a href="{% url newsroom-people %}">See all people</a>.</em></p>
+{% else %}
+<p><em>No people, yet - why don't you <a href="{% url newsroom-edit-profile %}">add your profile</a> now?</em></p>
+{% endif %}
+{% endif %}
+{% endblock %}
+
+
+{% block secondary %}
+<h2>Summary</h2>
+<p><a href="{% url newsroom-people %}">{% if not current_section %}<strong>{% endif %}{{ total }} {{ total|pluralize:"person,people" }} in total</a>{% if not current_section %}</strong>{% endif %}</p>
+<ul>
+{% for section in all_sections %}
+<li><a href="{% url newsroom-people-section section.slug %}">{% ifequal section current_section %}<strong>{% endifequal %}{{ section }}{% ifequal section current_section %}</strong>{% endifequal %}</a> ({{ section.people_count }} {{ section.people_count|pluralize:"person,people" }})</li>
+{% endfor %}
+{% if other_profiles %}
+<li><em>No section</em> ({{ other_profiles|length }} {{ other_profiles|pluralize:"person,people" }})</li>
+{% endif %}
+</ul>
+{% endblock %}
+

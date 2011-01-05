@@ -1,0 +1,48 @@
+{% extends "newsroom/base.html" %}
+{% load newsroom_profile newsroom_utils fuzzytime %}
+
+
+{% block navclass %}nav-requests{% endblock %}
+
+
+{% block main %}
+<h2>Requests</h2>
+<div class="requests">
+{% for assignment in requests %}
+<div class="request">
+<h3>{{ assignment.category }} &rsaquo; <a href="{{ assignment.get_absolute_url }}">{{ assignment }}</a></h3>
+<p>{{ assignment.first_detail_text|truncatewords:80 }}</p>
+<p>Created by {% profile assignment.created_by %} {{ assignment.created_at|fuzzytime }}</p>
+</div>
+{% empty %}
+<p><em>There are no requests{% if current_section %} in this section{% endif %}. Why don't you create one now?</em></p>
+{% endfor %}
+</div>
+{% endblock %}
+
+
+{% block secondary %}
+<h2>Take action</h2>
+<p>Compile</p>
+{% if sub_categories %}
+<p>Add a request:</p>
+<ul>
+{% for category in sub_categories %}
+<li><a href="{% url newsroom-add-request category_slug=category.slug %}">{{ category }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+<h2>Sort by</h2>
+<p>{% if not sorted_by %}<strong>{% endif %}<a href="{% querystring sort %}">Date created</a>{% if not sorted_by %}</strong>{% endif %}</p>
+<p>{% ifequal sorted_by "activity" %}<strong>{% endifequal %}<a href="{% querystring sort="activity" %}">Recent activity</a>{% ifequal sorted_by "activity" %}</strong>{% endifequal %}</p>
+{% if sections %}
+<h2>Filter</h2>
+<p>{% if not current_section %}<strong>{% endif %}<a href="{% querystring section %}">All sections</a>{% if not current_section %}</strong>{% endif %}</li>
+<ul>
+{% for section in sections %}
+<li>{% ifequal section current_section %}<strong>{% endifequal %}<a href="{% querystring section=section.slug %}">{{ section }}</a>{% ifequal section current_section %}</strong>{% endifequal %}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
+

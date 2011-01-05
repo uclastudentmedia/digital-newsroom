@@ -1,0 +1,39 @@
+{% extends "newsroom/template.html" %}
+{% load newsroom_profile %}
+
+
+{% block nav %}
+{% include "newsroom/include/logo.html" %}
+
+<form class="user">
+{% if user.is_authenticated %}
+{% get_profile user as profile %}
+<a href="{% if profile.pk %}{{ profile.get_absolute_url }}{% else %}{% url newsroom-edit-profile %}{% endif %}">My Info</a> | <a href="{% url newsroom-logout %}">Log out</a>
+{% endif %}
+<input type="text" name="q" />
+<input type="submit" value="Search" />
+</form>
+<ul>
+{% for slug, tab, url in newsroom_tabs %}
+<li class="nav-{{ slug }}"><a href="{{ url }}">{{ tab }}</a></li>
+{% endfor %}
+</ul>
+{% if newsroom_secondary_tabs %}
+<ul class="right">
+{% for slug, tab, url in newsroom_secondary_tabs %}
+<li class="nav-{{ slug }}"><a href="{{ url }}">{{ tab }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
+
+
+{% block content %}
+{% block content_start %}{% endblock %}
+<div id="main">
+{% block main %}{% endblock %}
+</div>
+<div id="secondary">
+{% block secondary %}{% endblock %}
+</div>
+{% endblock %}

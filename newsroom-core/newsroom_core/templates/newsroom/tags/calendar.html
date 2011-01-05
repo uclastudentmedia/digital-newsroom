@@ -1,0 +1,8 @@
+{% if calendar %}
+{% load newsroom_utils %}
+<ul class="assignments-calendar">
+{% for day, url, unfinished, finished in calendar %}
+<li class="{% ifequal day day1 %}nav {% endifequal %}{% if unfinished %}un{% endif %}{% if unfinished or finished %}finished{% endif %}"{% if unfinished %} title="{{ unfinished }} incomplete"{% endif %}>{% ifequal day day1 %}<a href="{% querystring cal=m_prev|date:"bY" %}" class="nav">&lsaquo;</a>{% endifequal %}<a href="{{ url }}{% if request.GET.cal %}?cal={{ request.GET.cal }}{% endif %}">{% ifchanged %}{{ day|date:"M" }}{% with day|date:"Y" as day_year %}{% ifnotequal day_year this_year %} {{ day|date:"Y" }},{% endifnotequal %}{% endwith %} {% endifchanged %}{{ day|date:"j" }}</a>{% ifequal day day1 %}<a href="{% querystring cal=m_next|date:"bY" %}" class="nav">&rsaquo;</a>{% endifequal %}</li>
+{% endfor %}
+</ul>
+{% endif %}

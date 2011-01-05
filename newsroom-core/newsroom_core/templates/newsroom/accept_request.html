@@ -1,0 +1,16 @@
+{% extends "newsroom/assignment_detail.html" %}
+
+
+{% block main %}
+<h2>Accept request</h2>
+<form class="box" method="post" action="">
+<p>Are you sure you want to accept this request, making it an assignment?</p>
+{{ accept_form.as_p }}
+<p><input type="submit" class="button" value="Accept request" /> or <a href="{{ assignment.get_absolute_url }}">Cancel</a></p>
+</form>
+{{ block.super }}
+{% endblock %}
+
+
+{% block secondary %}
+{% endblock %}

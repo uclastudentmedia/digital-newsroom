@@ -1,0 +1,36 @@
+{% extends "newsroom/assignments.html" %}
+{% load newsroom_profile newsroom_assignments %}
+
+
+{% block main %}
+<h2>{% if my_assignments %}My Assignments{% else %}Assignments for {% profile for_user %}{% endif %}</h2>
+
+{% if assignments %}
+<div class="assignments">
+{% if sort1 or sort2 %}
+{% list_assignments sorted_assignments %}
+{% else %}
+{% regroup assignments by pub_date as assignments_by_day %}
+{% for day in assignments_by_day %}
+<h3><a href="{% url_assignments_day day.grouper %}">{{ day.grouper|date:"l, F j, Y" }}</a></h3>
+{% list_assignments day.list %}
+{% endfor %}
+{% endif %}
+</div>
+{% else %}
+<p><em>{% if my_assignments %}You have no current assignments{% else %}No assignments for {% profile for_user %}{% endif %}.</em></p>
+{% endif %}
+{% endblock %}
+
+
+{% block my_assignments_link %}
+{% if not my_assignments %}
+<p><strong><a href="{% url newsroom-assignments %}">Assignments for {% profile for_user %}</a></strong></p>
+{% endif %}
+{{ block.super }}
+{% endblock %}
+
+
+{% block secondary_end %}
+{% include "newsroom/include/sort.html" %}
+{% endblock %}

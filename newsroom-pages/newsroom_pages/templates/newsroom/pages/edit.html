@@ -1,0 +1,28 @@
+{% extends "newsroom/pages/detail.html" %}
+
+
+{% block extrahead %}
+{{ block.super }}
+{% include "newsroom/ideas/include/idea_form_css.html" %}
+{% endblock %}
+
+
+{% block main %}
+<h2>{% if add %}Add{% else %}Edit{% endif %} Page</h2>
+<form{% if not add %} class="box"{% endif %} action="" method="post">
+{{ form.as_p }}
+<p><input class="button" type="submit" value="{% if not add %}Save{% else %}Add{% endif %} page" />{% if not add %} or <a href="{{ form.instance.get_absolute_url }}">Cancel</a>{% endif %}</p>
+</form>
+{% if not add %}
+{{ block.super }}
+{% endif %}
+{% endblock %}
+
+
+{% block secondary %}
+<h2>Actions</h2>
+{% include "newsroom/pages/include/action_view_others.html" %}
+{% if not add %}
+{% include "newsroom/pages/include/action_delete.html" %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "newsroom/base.html" %}
+
+
+{% block navclass %}nav-requests{% endblock %}
+
+
+{% block main %}
+<h2>Add {{ category }} Request</h2>
+
+<form action="" method="post">
+<p>You need to specify the assignment this request is related to. {% if recent_assignments %}Shown below are a list of recently created assignments or alternatively, you can enter the application slug.{% endif %}</p>
+{% if error %}
+<ul class="errorlist"><li>{{ error }}</li></ul>
+{% endif %}
+{% if recent_assignments %}
+<p><label>Assignment:</label> {{ recent_assignments }}</p>
+{% endif %}
+<p><label for="assignment_slug">{% if recent_assignments %}or {% endif %}Search Slug:</label> <input type="text" name="assignment_slug" id="assignment_slug" value="{{ assignment_slug}}" /></p>
+{% if assignments %}
+<fieldset>
+<legend>Choose a recent assignment (which matched &quot;{{ assignments_match }}&quot;)</legend>
+{% for assignment in assignments %}
+<p><input type="radio" class="checkbox" name="assignment_id" value="{{ assignment.pk }}" id="assignment_{{ assignment.pk }}"> <label class="checkbox" for="assignment_{{ assignment.pk }}">{{ assignment }}</label></p>
+{% endfor %}
+</fieldset>
+{% endif %}
+<p><input type="submit" class="button" value="Add Request" /></p>
+</form>
+{% endblock %}

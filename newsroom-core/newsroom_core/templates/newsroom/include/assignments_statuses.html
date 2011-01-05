@@ -1,0 +1,30 @@
+{% if statuses %}
+<table class="assignments-statuses">
+<thead>
+<tr><td>&nbsp;</td>
+{% for status in statuses %}
+<th>{{ status }}</th>
+{% endfor %}
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+{% if user.is_authenticated %}
+<tr{% if not statuses_my_assignments_total %} class="empty"{% endif %}>
+<th>Assigned to Me</th>
+{% for status in statuses %}
+<td>{{ status.my_assignments_count }}</td>
+{% endfor %}
+<td>{{ statuses_my_assignments_total }}</td>
+</tr>
+{% endif %}
+<tr{% if not statuses_assignments_total %} class="empty"{% endif %}>
+<th>All Assignments</th>
+{% for status in statuses %}
+<td>{{ status.assignments_count }}</td>
+{% endfor %}
+<td>{{ statuses_assignments_total }}</td>
+</tr>
+</tbody>
+</table>
+{% endif %}

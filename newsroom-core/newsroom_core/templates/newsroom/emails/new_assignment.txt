@@ -1,0 +1,12 @@
+{% extends "newsroom/emails/base.txt" %}
+{% load newsroom_profile %}
+SUBJECT: You've been assigned to {{ assignment }}
+
+
+{% block content %}{% get_profile assignment.created_by as creator %}{{ creator }} assigned this {% if assignment.confirmed %}assignment{% else %}request{% endif %} to you.
+You will receive notifications of any comments / status changes.
+
+To see this {% if assignment.confirmed %}assignment{% else %}request{% endif %} message, follow the link below:
+http://{{ site }}{{ assignment.get_absolute_url }}{% if assignment.pub_date %}
+(it has a pub date of {{ assignment.pub_date|date:"N j, Y" }}){% endif %}
+{% endblock %}

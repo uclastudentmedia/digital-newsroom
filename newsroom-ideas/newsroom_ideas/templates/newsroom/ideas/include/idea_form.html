@@ -1,0 +1,13 @@
+<form class="box" action="" method="post" enctype="multipart/form-data">
+<h3>{% if form.instance.pk %}Edit{% else %}Your{% endif %} Idea</h3>
+{{ form.idea.errors }}
+<p>{{ form.idea }}</p>
+<fieldset>
+<legend>Additional Info</legend>
+{{ form.section.errors }}
+<p>{{ form.section.label_tag }} {{ form.section }}</p>
+{{ form.file.errors }}
+<p>{{ form.file.label_tag }} {{ form.file }}</p>
+</fieldset>
+<p><input class="button" type="submit" value="{% if form.instance.pk %}Save{% else %}Add{% endif %} idea" />{% if form.instance.pk %} or <a href="{{ form.instance.get_absolute_url }}">Cancel</a>{% endif %}</p>
+</form>

@@ -1,0 +1,25 @@
+{% extends "newsroom/pages/base.html" %}
+
+
+{% block main %}
+<h2>Pages</h2>
+<div class="pages">
+{% if page_list %}
+{% for page in page_list %}
+<div class="page{% if forloop.last %} last{% endif %}">
+<h3><a href="{{ page.get_absolute_url }}">{{ page }}</a></h3>
+{{ page.summary|urlize|linebreaks }}
+</h3>
+</div>
+{% endfor %}
+{% else %}
+<p><em>No pages yet, why don't you add the first?</em></p>
+{% endif %}
+</div>
+{% endblock %}
+
+
+{% block secondary %}
+<h2>Actions</h2>
+{% include "newsroom/pages/include/action_add.html" %}
+{% endblock %}

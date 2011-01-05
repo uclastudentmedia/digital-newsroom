@@ -1,0 +1,5 @@
+{% load newsroom_profile %}
+{% get_profile user as profile %}
+{% if profile.is_editor %}
+<p><a href="{% url newsroom-page-delete page.slug %}">Delete this page</a></p>
+{% endif %}

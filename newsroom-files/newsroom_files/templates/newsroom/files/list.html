@@ -1,0 +1,51 @@
+{% extends "newsroom/base.html" %}
+{% load newsroom_profile newsroom_utils fuzzytime %}
+
+
+{% block navclass %}nav-files{% endblock %}
+
+
+{% block main %}
+<h2>{% if current_section %}{{ current_section }} {% endif %}Files</h2>
+<div class="files">
+{% if file_list %}
+{% for file in file_list %}
+<div class="file{% if forloop.last %} last {% endif %}">
+<h4><a href="{{ file.file.url }}">{{ file }}</a></h4>
+{% if file.superceeds %}<div class="superceeds">Superceeds {{ file.superceeds }} posted {{ file.superceeds_date|daysdiff:file.updated_on }}</a></div>{% endif %}
+{{ description|linebreaks }}
+<div class="when">Uploaded {{ file.updated_on|fuzzytime }} by {% profile file.created_by %}</div>
+{% if not current_section %}<div class="section">Filed under <a href="{% url newsroom-files %}?section={{ file.section.slug }}">{{ file.section }}</a></div>{% endif %}
+<div class="actions">
+<a href="{{ file.file.url }}">View file</a>
+| <a href="{% url newsroom-file-replace file.pk %}">Upload a new version</a>
+| <a href="{% url newsroom-file-delete file.pk %}">Delete</a>
+</div>
+</div>
+{% endfor %}
+{% else %}
+<p><em>No files {% if current_section %}in this section {% endif %}yet. Want to <a href="{% url newsroom-file-upload %}">add one now</a>?</em></p>
+{% endif %}
+</div>
+{% endblock %}
+
+
+{% block secondary %}
+<h2>Action</h2>
+<p><a href="{% url newsroom-file-upload %}">Upload a file</a></p>
+
+<h2>Sort By</h2>
+<p>{% if not sort_by_size %}<strong>{% endif %}<a href="{% querystring sort %}">Date posted</a>{% if not sort_by_size %}</strong>{% endif %}</p>
+<p>{% if sort_by_size %}<strong>{% endif %}<a href="{% querystring sort="size" %}">File size</a>{% if sort_by_size %}</strong>{% endif %}</p>
+
+<h2>Section</h2>
+<p><a href="{% querystring section %}">{% if not current_section %}<strong>{% endif %}All files ({{ files_count }}){% if not current_section %}</strong>{% endif %}</a></p>
+{% if sections %}
+<ul>
+{% for section in sections %}
+<li>{% ifequal section current_section %}<strong>{% endifequal %}<a href="{% querystring section=section.slug %}">{{ section }} ({{ section.file__count }})</a>{% ifequal section current_section %}</strong>{% endifequal %}</li>
+{% endfor %}
+</ul>
+{% endif %}
+</ul>
+{% endblock %}

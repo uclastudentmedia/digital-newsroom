@@ -1,0 +1,29 @@
+{% extends "newsroom/base.html" %}
+{% load newsroom_profile %}
+
+
+{% block navclass %}nav-people{% endblock %}
+
+
+{% block main %}
+{% get_profile user as profile %}
+<form action="" method="post" enctype="multipart/form-data">
+<h2>{% if profile.pk %}Edit{% else %}Add{% endif %} profile</h2>
+<fieldset>
+<legend>Basic details</legend>
+{{ user_form.as_p }}
+</fieldset>
+<fieldset>
+<legend>Profile details</legend>
+{{ form.as_p }}
+</fieldset>
+{% if password_form %}
+<fieldset>
+<legend>Change Password</legend>
+{{ password_form.as_p }}
+</fieldset>
+{% endif %}
+<p><input type="submit" class="button" value="{% if profile.pk %}Save{% else %}Add{% endif %} profile">{% if profile.pk %} or <a href="{{ profile.get_absolute_url }}">cancel</a>{% endif %}</p>
+</form>
+{% endblock %}
+

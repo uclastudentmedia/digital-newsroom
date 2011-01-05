@@ -1,0 +1,75 @@
+/* basic template */
+
+body {
+	font-family:verdana, arial, sans-serif;
+	font-size:.8em;
+	margin:0;
+	padding:5em 1em 1em;
+	background:#eee;
+	color:#000;
+}
+
+h1 {
+	font-size:3em;
+	text-align:center;
+	padding:.5em 2em;
+	margin:0;
+}
+
+.wrapper {
+	width:550px;
+	margin:0 auto;
+	padding:10px;
+}
+
+#content {
+	overflow:hidden;
+	zoom:1; /* IE float expansion */
+	background:#fff;
+	border:1px solid #ccc;
+	padding:2em;
+}
+
+#content h1 {
+	font-size:1.8em;
+	text-align:left;
+	padding:0 0 .5em;
+}
+
+p {
+	padding:0;
+	margin:0 0 1em;
+}
+
+a {
+	text-decoration:none;
+}
+a:hover {
+	text-decoration:underline;
+}
+
+
+/* basic form styling */
+
+label {
+	display:block;
+	font-weight:bold;
+	color:#333;
+}
+
+.errorlist {
+	list-style:none;
+	margin:.5em 0 0 10em;
+	padding:0;
+}
+
+.errorlist li {
+	font-size:.8em;
+	color:#930;
+	font-weight:bold;
+}
+
+label.checkbox {
+	font-weight:normal;
+	display:inline;
+}

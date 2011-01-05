@@ -1,0 +1,20 @@
+{% extends "newsroom/pages/detail.html" %}
+
+
+{% block main %}
+<form class="box" action="" method="post">
+<h3>Delete page</h3>
+<p><em>Are you sure you want to permanently delete the page listed below?</em></p>
+<p><input type="submit" class="button" value="Yes, delete the page" /> <a href="{{ page.get_absolute_url }}">No, get me out of here</a></p>
+</form>
+{{ block.super }}
+{% endblock %}
+
+
+{% block comment_form %}{% endblock %}
+
+
+{% block secondary %}
+<h2>Actions</h2>
+<p><a href="{% url newsroom-pages %}">View other pages</a></p>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% load newsroom_profile fuzzytime %}
+<div class="comment{% if forloop.last %} last {% endif %}">
+{% get_profile comment.created_by as profile %}
+<div class="user">{{ profile }} -</div>
+{{ comment.comment|linebreaks }}
+<div class="when">{{ comment.created_at|fuzzytime }}</div>
+{% block actions %}
+{% if comment.file %}
+<div class="actions">
+{% if comment.file %}<a href="{{ comment.file.url }}">View file</a>{% endif %}
+{% comment %}
+{% if comment.file %} | {% endif %}<a href="{% url newsroom-comment-edit comment.pk %}">Edit</a>
+| <a href="{% url newsroom-comment-delete comment.pk %}">Delete</a>
+{% endcomment %}
+</div>
+{% endif %}
+{% endblock %}
+</div>

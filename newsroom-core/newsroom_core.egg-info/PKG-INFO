@@ -1,0 +1,17 @@
+Metadata-Version: 1.0
+Name: newsroom-core
+Version: svn-r946
+Summary: Newsroom core application.
+Home-page: http://www.dailybruin.com
+Author: UCLA Student Media
+Author-email: someone@media.ucla.edu
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Framework :: Django

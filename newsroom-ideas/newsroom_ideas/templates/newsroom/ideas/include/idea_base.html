@@ -1,0 +1,27 @@
+{% load newsroom_profile fuzzytime %}
+<div class="comment{% if forloop.last %} last {% endif %}">
+{% get_profile idea.created_by as profile %}
+<div class="user">{{ profile }} -</div>
+{{ idea.idea|linebreaks }}
+<div class="when">{{ idea.created_at|fuzzytime }}</div>
+{% if idea.section %}<div class="section">filed under: <a href="{% url newsroom-ideas %}?section={{ idea.section.slug }}">{{ idea.section }}</a></div>{% endif %}
+{% block actions %}
+<div class="actions">
+<a href="{{ idea.get_absolute_url }}#comment">Reply</a>
+{% if idea.file %} | <a href="{{ idea.file.url }}">View file</a>{% endif %}
+| <a href="{% url newsroom-idea-edit idea.pk %}">Edit</a>
+| <a href="{% url newsroom-idea-delete idea.pk %}">Delete</a>
+</div>
+{% endblock %}
+{% block replies %}
+{% with idea.comment_set.all as replies %}
+{% if replies %}
+<div class="replies">
+{% for reply in replies %}
+{% include "newsroom/ideas/include/reply.html" %}
+{% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock replies %}
+</div>

@@ -1,0 +1,17 @@
+setup.py
+newsroom_files/__init__.py
+newsroom_files/admin.py
+newsroom_files/forms.py
+newsroom_files/models.py
+newsroom_files/tests.py
+newsroom_files/urls.py
+newsroom_files/views.py
+newsroom_files.egg-info/PKG-INFO
+newsroom_files.egg-info/SOURCES.txt
+newsroom_files.egg-info/dependency_links.txt
+newsroom_files.egg-info/not-zip-safe
+newsroom_files.egg-info/requires.txt
+newsroom_files.egg-info/top_level.txt
+newsroom_files/templates/newsroom/files/delete.html
+newsroom_files/templates/newsroom/files/list.html
+newsroom_files/templates/newsroom/files/upload.html

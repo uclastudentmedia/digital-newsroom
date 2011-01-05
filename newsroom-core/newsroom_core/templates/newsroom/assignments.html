@@ -1,0 +1,107 @@
+{% extends "newsroom/base.html" %}
+{% load newsroom_calendar newsroom_assignments newsroom_utils %}
+
+
+{% block navclass %}nav-assignments{% endblock %}
+
+
+{% block extrahead %}
+<script type="text/javascript" src="{{ NEWSROOM_MEDIA_URL }}js/jquery-ui-personalized-1.6rc6.min.js"></script>
+<script type="text/javascript">
+function clear_popup(){
+	$('.status .popup').fadeOut('fast',function(){$(this).remove()})
+}
+function open_popup(){
+	$('.status .popup').remove()
+	var html = '<div class="popup" style="position:absolute;width:700px; border:1px solid #ccc; padding:7px 10px 0; background:#eee; z-index:1;cursor:default;"><ul style="padding:0;margin:0;list-style:none;">'
+	{% for_statuses %}
+	html += '<li style="float:left; margin-right:2em;"><input type="radio" class="checkbox" name="change_status" id="change_status_{{ status.pk }}" value="{{ status.slug }}"> <label for="change_status_{{ status.pk }}">{{ status }}</label></li>'
+	{% endfor %}
+	html += '</ul><p style="float:left;margin-bottom:7px;"><input type="submit" value="Save" /> <input type="button" value="Cancel" /></p>'
+	html += '<input type="hidden" name="assignment_id" value="'
+	html += $(this).parent().parent().attr('rel')
+	html += '"></div>'
+	$(this).after(html)
+	{% for_statuses %}
+	$('.status-{{ status.slug }} input[value={{ status.slug }}]').attr('checked', 'checked')
+	{% endfor %}
+	$('.status input[type=button]').click(clear_popup)
+	$('.status input[type=submit]').click(function(){
+		$('strong', $(this).parent().parent().parent()).text('...')
+		var fields = $(":input", $(this).parent().parent()).serializeArray();
+		var data = new Object
+		$.each(fields, function(i, field) {data[field.name] = field.value})
+		$.post('{% url newsroom-assignment-change-status %}', data, function (data){
+			var bits = data.split(',', 3)
+			$('tr[rel='+bits[0]+'] .status strong').text(bits[2]).parent().removeClass().addClass('status').addClass('status-'+bits[1])
+			$('#ajax_reload').attr('value', 'yes')
+		})
+		clear_popup()
+	})
+	return false
+}
+$(function (){
+	if($('#ajax_reload').attr('value')) {
+		$('#ajax_reload').attr('value', '')
+		window.location.reload()
+	}
+	$('.status').css('position', 'relative')
+	$('.status strong').css('cursor', 'pointer').attr('title', 'Click to change status').click(open_popup)
+	$('body').append('<input type="hidden" name="reload" value="">')
+})
+</script>
+{% endblock %}
+
+
+{% block content_start %}
+{% newsroom_calendar 30 %}
+<input type="hidden" name="reload" id="ajax_reload" />
+{% endblock %}
+
+
+{% block main %}
+<h2>{{ current_section }} Assignments</h2>
+<div class="assignments">
+{% assignments_upcoming 3 as days from assignments %}
+{% for day, url, day_assignments in days %}
+
+{% truncate_list day_assignments 3 %}
+<h3><a href="{{ url }}{% if current_section %}?section={{ current_section.slug }}{% endif %}">{{ day|date:"l, F j, Y" }}</a></h3>
+
+{% get_statuses as statuses for day from assignments %}
+{% include "newsroom/include/assignments_statuses.html" %}
+
+{% list_assignments day_assignments %}
+
+{% endfor %}
+</div>
+{% endblock main %}
+
+
+{% block secondary %}
+{% if top_categories or day %}
+<h2>Actions</h2>
+{% block actions %}
+{% endblock %}
+{% for category in top_categories %}
+<p><a href="{% url newsroom-add-assignment category.slug %}">Create {{ category }} Assignment</a></p>
+{% endfor %}
+{% endif %}
+
+<h2>View</h2>
+{% block my_assignments_link %}
+{% if user.is_authenticated %}
+<p>{% if my_assignments %}<strong>{% endif %}<a href="{% url newsroom-assignments-profile user.username %}">My assignments ({{ user.assignments_involved.assignments.count }})</a>{% if my_assignments %}</strong>{% endif %}</p>
+{% endif %}
+{% endblock %}
+<p>{% if not for_user and not current_section %}<strong>{% endif %}<a href="{{ assignments_link }}{% querystring section %}">{% block all_assignments_title %}All assignments{% endblock %}</a>{% if not for_user and not current_section %}</strong>{% endif %}</p>
+{% if sections %}
+<ul>
+{% for section in sections %}
+<li>{% ifequal section current_section %}<strong>{% endifequal %}<a href="{{ assignments_link }}{% querystring section=section.slug %}">{{ section }}</a>{% ifequal section current_section %}</strong>{% endifequal %}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% block secondary_end %}{% endblock %}
+{% endblock secondary %}
+
